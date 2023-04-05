@@ -45,4 +45,9 @@ class TodoProvider extends ChangeNotifier {
     _todoList[index] = updatedTodo;
     notifyListeners();
   }
+
+  void delete(String uuid) {
+    _todoList.removeWhere((element) => element.uuid == uuid);
+    notifyListeners();
+  }
 }

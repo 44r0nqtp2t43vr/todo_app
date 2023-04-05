@@ -18,11 +18,17 @@ class CompletedPage extends StatelessWidget {
             itemCount: completeList.length,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
-              return TodoCard(
-                uuid: completeList[index].uuid,
-                isComplete: completeList[index].isComplete,
-                title: completeList[index].title,
-                description: completeList[index].description,
+              return Padding(
+                padding: EdgeInsets.only(
+                  top: index == 0 ? 8 : 0,
+                  bottom: index == completeList.length - 1 ? 8 : 0,
+                ),
+                child: TodoCard(
+                  uuid: completeList[index].uuid,
+                  isComplete: completeList[index].isComplete,
+                  title: completeList[index].title,
+                  description: completeList[index].description,
+                ),
               );
             },
           ),

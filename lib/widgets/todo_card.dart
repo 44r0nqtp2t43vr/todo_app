@@ -63,7 +63,9 @@ class TodoCard extends StatelessWidget {
           motion: const ScrollMotion(),
           children: [
             SlidableAction(
-              onPressed: (context) {},
+              onPressed: (context) {
+                context.read<TodoProvider>().delete(uuid);
+              },
               backgroundColor: Colors.red,
               foregroundColor: Colors.white,
               borderRadius: const BorderRadius.only(

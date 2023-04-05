@@ -29,7 +29,10 @@ class _EditScreenState extends State<EditScreen> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.delete),
-            onPressed: () {},
+            onPressed: () {
+              context.read<TodoProvider>().delete(args.uuid);
+              Navigator.of(context).pop();
+            },
           ),
         ],
       ),
