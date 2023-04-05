@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/pages/completed_page.dart';
+import 'package:todo_app/pages/edit_screen.dart';
 import 'package:todo_app/pages/todo_page.dart';
 import 'package:todo_app/providers/todo_provider.dart';
 import 'package:todo_app/widgets/add_dialog.dart';
@@ -23,6 +24,9 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.pink,
         ),
         home: const HomePage(),
+        routes: {
+          '/edit': (context) => const EditScreen(),
+        },
       ),
     );
   }

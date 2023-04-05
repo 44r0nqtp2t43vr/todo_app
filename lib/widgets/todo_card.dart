@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/arguments/editroute_arguments.dart';
 import 'package:todo_app/providers/todo_provider.dart';
 
 class TodoCard extends StatelessWidget {
@@ -35,7 +36,17 @@ class TodoCard extends StatelessWidget {
           motion: const ScrollMotion(),
           children: [
             SlidableAction(
-              onPressed: (context) {},
+              onPressed: (context) {
+                Navigator.pushNamed(
+                  context,
+                  '/edit',
+                  arguments: EditRouteArguments(
+                    uuid: uuid,
+                    title: title,
+                    description: description,
+                  ),
+                );
+              },
               backgroundColor: Colors.green,
               foregroundColor: Colors.white,
               borderRadius: const BorderRadius.only(
@@ -65,7 +76,17 @@ class TodoCard extends StatelessWidget {
           ],
         ),
         child: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              '/edit',
+              arguments: EditRouteArguments(
+                uuid: uuid,
+                title: title,
+                description: description,
+              ),
+            );
+          },
           child: Container(
             constraints: const BoxConstraints(
               minHeight: 100,
