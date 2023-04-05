@@ -8,22 +8,26 @@ class TodoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final todoList = context.select<TodoProvider, List<Todo>>(
-      (provider) => provider.todoList,
-    );
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: ListView.builder(
-        itemCount: todoList.length,
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, index) {
-          return TodoCard(
-            isComplete: todoList[index].isComplete,
-            title: todoList[index].title,
-            description: todoList[index].description,
-          );
-        },
-      ),
+    return Consumer<TodoProvider>(
+      builder: (context, value, child) {
+        final incompleteList =
+            value.todoList.where((element) => !element.isComplete).toList();
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: ListView.builder(
+            itemCount: incompleteList.length,
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, index) {
+              return TodoCard(
+                uuid: incompleteList[index].uuid,
+                isComplete: incompleteList[index].isComplete,
+                title: incompleteList[index].title,
+                description: incompleteList[index].description,
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

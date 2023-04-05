@@ -15,14 +15,6 @@ class Todo {
     required this.description,
   }) : uuid = const Uuid().v4();
 
-  void complete() {
-    isComplete = true;
-  }
-
-  void redo() {
-    isComplete = false;
-  }
-
   @override
   bool operator ==(covariant Todo other) => uuid == other.uuid;
 
@@ -31,16 +23,26 @@ class Todo {
 }
 
 class TodoProvider extends ChangeNotifier {
-  List<Todo> _todoList = [];
-  List<Todo> _completedList = [];
+  final List<Todo> _todoList = [];
   UnmodifiableListView<Todo> get todoList => UnmodifiableListView(_todoList);
-  UnmodifiableListView<Todo> get completedList =>
-      UnmodifiableListView(_completedList);
 
   void add(Todo todo) {
-    List<Todo> newTodoList = _todoList.toList();
-    newTodoList.add(todo);
-    _todoList = newTodoList.toList();
+    _todoList.add(todo);
+    notifyListeners();
+  }
+
+  void update(
+    String uuid,
+    bool? isComplete,
+    String? title,
+    String? description,
+  ) {
+    final index = _todoList.indexWhere((element) => element.uuid == uuid);
+    Todo updatedTodo = _todoList[index];
+    updatedTodo.isComplete = isComplete ?? updatedTodo.isComplete;
+    updatedTodo.title = title ?? updatedTodo.title;
+    updatedTodo.description = description ?? updatedTodo.description;
+    _todoList[index] = updatedTodo;
     notifyListeners();
   }
 }

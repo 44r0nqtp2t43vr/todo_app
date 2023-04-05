@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/providers/todo_provider.dart';
 
 class TodoCard extends StatelessWidget {
   const TodoCard({
     super.key,
+    required this.uuid,
     required this.isComplete,
     required this.title,
     required this.description,
   });
 
+  final String uuid;
   final bool isComplete;
   final String title;
   final String description;
@@ -60,56 +64,64 @@ class TodoCard extends StatelessWidget {
             ),
           ],
         ),
-        child: Container(
-          constraints: const BoxConstraints(
-            minHeight: 100,
-            minWidth: double.infinity,
-          ),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: Checkbox(
-                  value: isComplete,
-                  onChanged: (value) {},
-                ),
-              ),
-              Expanded(
-                flex: 5,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 16,
-                    right: 16,
-                    bottom: 16,
+        child: GestureDetector(
+          onTap: () {},
+          child: Container(
+            constraints: const BoxConstraints(
+              minHeight: 100,
+              minWidth: double.infinity,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Checkbox(
+                    value: isComplete,
+                    onChanged: (value) {
+                      context
+                          .read<TodoProvider>()
+                          .update(uuid, value, null, null);
+                    },
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                          color: Colors.pink,
+                ),
+                Expanded(
+                  flex: 5,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 20,
+                      right: 16,
+                      bottom: 20,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                            color: Colors.pink,
+                          ),
                         ),
-                      ),
-                      description.isNotEmpty
-                          ? Text(
-                              description,
-                              style: const TextStyle(
-                                fontSize: 16,
-                              ),
-                            )
-                          : Container(),
-                    ],
+                        description.isNotEmpty
+                            ? Text(
+                                description,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  height: 1.4,
+                                ),
+                              )
+                            : Container(),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
